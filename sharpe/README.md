@@ -1,8 +1,18 @@
-# React + Vite
+Steps to run the application on localhost from a GitHub repository:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+1. Clone the repository:
 
-Currently, two official plugins are available:
+Open a terminal and navigate to the directory where you want to store the application.
+Run the git clone command with the URL of the repository.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2. Install dependencies:
+
+Run npm install to install dependencies.
+
+3. Start the application:
+
+Run npm run dev to start application.
+
+4. Access the application:
+
+Open your web browser and navigate to http://localhost:5173/sharpe
