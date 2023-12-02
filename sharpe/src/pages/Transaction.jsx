@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import bg from "../assets/blurBg.png";
+import axios from "axios";
 
 const Transaction = () => {
   const initialValues = {
@@ -16,18 +17,40 @@ const Transaction = () => {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
     setIsSubmit(true);
-    console.log(isSubmit, formErrors);
+
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      const { wallet, amount } = formValues;
+      const options = {
+        method: "POST",
+        headers: {
+          "COntent-Type": "application/json",
+        },
+        body: JSON.stringify({
+          wallet,
+          amount,
+        }),
+      };
+
+      const res = await axios.post(
+        "https://sharpe-9e7f5-default-rtdb.firebaseio.com/Transaction.json",
+        options
+      );
+
+      if (res) {
+        alert("Sent!");
+      } else {
+        alert("Error!");
+      }
+
+      setFormValues(initialValues);
+    }
   };
 
-  useEffect(() => {
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      alert("Fine!");
-    }
-  }, [formErrors]);
+  useEffect(() => {}, [formErrors]);
 
   const validate = (values) => {
     const errors = {};
