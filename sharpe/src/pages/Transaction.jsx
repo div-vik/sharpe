@@ -1,7 +1,53 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import bg from "../assets/blurBg.png";
 
 const Transaction = () => {
+  const initialValues = {
+    wallet: "",
+    amount: "",
+  };
+
+  const [formValues, setFormValues] = useState(initialValues);
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setFormErrors(validate(formValues));
+    setIsSubmit(true);
+    console.log(isSubmit, formErrors);
+  };
+
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      alert("Fine!");
+    }
+  }, [formErrors]);
+
+  const validate = (values) => {
+    const errors = {};
+    const regex = /^0x[a-fA-F0-9]{40}$/g;
+
+    if (!values.wallet) {
+      errors.wallet = "Wallet address is required!";
+    } else if (!regex.test(values.wallet)) {
+      errors.wallet = "Invalid format!";
+    }
+
+    if (!values.amount) {
+      errors.amount = "Amount is required!";
+    } else if (values.amount < 0 || values.amount > 10000) {
+      errors.amount = "Amount range must be 0 - 10,000!";
+    }
+
+    return errors;
+  };
+
   return (
     <div className="absolute top-0 h-screen w-screen bg-[#09090B]">
       <div className="relative">
@@ -16,15 +62,29 @@ const Transaction = () => {
                 <form className="w-full h-full rounded-2xl flex flex-col">
                   <label className="mb-2 text-lg">Wallet Address </label>
                   <input
+                    name="wallet"
+                    value={formValues.wallet}
+                    onChange={handleChange}
                     placeholder="0x71C7656EC7ab88b098..."
                     className="bg-transparent focus:outline-none py-1 border-b-[1px]"
                   />
+                  <p className="py-2 text-red-500">{formErrors.wallet}</p>
+
                   <label className="mb-2 text-lg mt-5">Amount </label>
                   <input
-                    placeholder="500-1000"
+                    name="amount"
+                    value={formValues.amount}
+                    onChange={handleChange}
+                    type="number"
+                    placeholder="0-10,000"
                     className="bg-transparent focus:outline-none py-1 border-b-[1px]"
                   />
-                  <div className="w-fit px-3 py-2 mt-5 bg-pink-500 rounded-md hover:cursor-pointer">
+                  <p className="py-2 text-red-500">{formErrors.amount}</p>
+
+                  <div
+                    onClick={handleSubmit}
+                    className="w-fit px-3 py-2 mt-5 bg-pink-500 rounded-md hover:cursor-pointer"
+                  >
                     Submit
                   </div>
                 </form>
