@@ -9,6 +9,7 @@ const Data = () => {
   const [user1Posts, setUser1Posts] = useState([]);
   const [chartData, setChartData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingChart, setLoadingChart] = useState(true);
 
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
@@ -42,6 +43,7 @@ const Data = () => {
   }, []);
 
   useEffect(() => {
+    // setLoadingChart(true);
     if (chartInstance.current) {
       chartInstance.current.destroy();
     }
@@ -64,6 +66,7 @@ const Data = () => {
       if (chartInstance.current) {
         chartInstance.current.destroy();
       }
+      // setLoadingChart(false);
     };
   });
 
@@ -124,6 +127,17 @@ const Data = () => {
               <div className="w-[50%] h-full">
                 <h2 className="text-xl px-5 py-5">Pie Chart</h2>
                 <div>
+                  {/* {loadingChart && (
+                    <p className="w-full h-full flex justify-center items-center">
+                      Loading...
+                    </p>
+                  )}
+                  {!loadingChart && (
+                    <canvas
+                      ref={chartRef}
+                      style={{ width: "300px", height: "300px" }}
+                    />
+                  )} */}
                   <canvas
                     ref={chartRef}
                     style={{ width: "300px", height: "300px" }}
