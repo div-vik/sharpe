@@ -1,4 +1,14 @@
-Steps to run the application on localhost from a GitHub repository:
+Description:
+
+Application contain three pages: Home, Transaction and Data.
+
+Home page contain only comapny logo.
+
+Transaction page contain form component which is integrated with firebase to post data on it.
+
+Data page contain table which involves all posts of user by id 1 and a pie chart.
+
+Installation:
 
 1. Clone the repository:
 
